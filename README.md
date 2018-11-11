@@ -9,7 +9,7 @@ Run `npm install`
 ## Development
 Run `npm start`
 
-hen go to [http://localhost:9096/](http://localhost:9096/)
+Then go to [http://localhost:9096/](http://localhost:9096/)
 
 ## Production build
 Run `npm run build`
