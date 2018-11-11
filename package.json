@@ -1,0 +1,77 @@
+{
+  "name": "memorygamev2",
+  "version": "1.0.0",
+  "description": "Memory game built with react js",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jest",
+    "build": "NODE_ENV=production webpack",
+    "start": "webpack-dev-server --content-base src --inline --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorgedl/MemoryGameV2.git"
+  },
+  "keywords": [
+    "memory",
+    "game",
+    "react",
+    "js"
+  ],
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "author": "Jorge De Lucca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorgedl/MemoryGameV2/issues"
+  },
+  "homepage": "https://github.com/jorgedl/MemoryGameV2#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-transform-async-to-generator": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^1.0.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "7.11.1",
+    "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "less": "^3.8.1",
+    "less-loader": "4.1.0",
+    "style-loader": "0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "3.1.10"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "material-icons": "^0.2.3",
+    "prop-types": "15.6.2",
+    "react": "16.6.1",
+    "react-dom": "16.6.1",
+    "react-redux": "^5.1.0",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1"
+  }
+}

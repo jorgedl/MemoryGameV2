@@ -1,0 +1,52 @@
+@import '../../../baseStyles/baseColors.less';
+@import '../../../baseStyles/basePaddings.less';
+
+.game {
+    display: grid;
+    grid-template: auto / 300px auto;
+    height: 100%;
+    grid-gap: .5rem;
+
+    &__score {
+        background: @brand-second-color;
+        padding: @container-padding;
+        color: #FFF;
+    }
+
+    &__board {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: repeat(auto-fill, 25%);
+        height: 100%;
+        grid-gap: .5rem;
+
+        &--empty {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.welcome {
+    &__title {
+        margin: 0 0 2rem 0;
+        font-size: 2rem;
+    }
+
+    &__instructions {
+        margin: 0;
+        font-size: 1.4rem;
+    }
+    &__button {
+        font-size: 2rem;
+        background: @brand-main-color;
+        color: #FFF;
+        margin: 2rem 0 0 0;
+    }
+}
+
+.finished {
+    font-size: 2rem;
+}

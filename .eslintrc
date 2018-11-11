@@ -1,0 +1,20 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
+    "plugins": [
+        "react"
+    ],
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "mocha": true
+    },
+    "rules": {
+        "react/no-unknown-property": [0, { "ignore": ["class"] }],
+        "indent": ["error", 4],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "comma-dangle": ["off"]
+    }
+}

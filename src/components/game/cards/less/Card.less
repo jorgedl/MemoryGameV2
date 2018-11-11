@@ -1,0 +1,26 @@
+.card {
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #999;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &__icon {
+        // This is so wrong -_-
+        font-size: 4rem !important;
+    }
+
+    &--selected {
+        background: #6b6b6b;
+    }
+
+    &--correct {
+        background: #5baf51;
+    }
+
+    &--wrong {
+        background: #c33737;
+    }
+}
