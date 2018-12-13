@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button/Button';
+import TextInput from '../input/TextInput';
+import Card from './cards/Card';
 
 import './less/Game.less';
 
@@ -8,13 +10,30 @@ const GAME_TIP_ONE = 'The cards gonna show for 1 second. Try to memorize them.';
 const GAME_TIP_TWO = 'Using your visual memory, make pairs of similar cards.';
 const GAME_TIP_THREE = 'Have fun.';
 
-function GameBoardWrapper({ children, onClick, hasGameFinished }) {
+let timer;
+
+function GameBoard({
+    board,
+    prepareCards,
+    pickCard,
+    postCardPick,
+    unmarkErrors,
+    flipAllCards,
+    setUserName
+}) {
+    const {
+        cardList,
+        hasError,
+        cardsFlipped,
+        hasGameFinished
+    } = board;
+
     if (hasGameFinished) {
         return (
             <div className="game__board--empty finished">
                 Congratulations, you won!
                 <Button
-                    onClick={onClick}
+                    onClick={prepareCards}
                     className="welcome__button"
                 >
                     Play again
@@ -22,8 +41,9 @@ function GameBoardWrapper({ children, onClick, hasGameFinished }) {
             </div>
         );
     }
-    if (children === undefined
-        || children.length === 0
+
+    if (cardList === undefined
+        || cardList.length === 0
     ) {
         return (
             <div className="game__board--empty welcome">
@@ -39,8 +59,13 @@ function GameBoardWrapper({ children, onClick, hasGameFinished }) {
                     <br />
                     {`3. ${GAME_TIP_THREE}`}
                 </p>
+                <TextInput
+                    placeholder="Your name"
+                    onChange={({ target: { value } }) => setUserName(value)}
+                    onKeyUp={({ key }) => key === 'Enter' && prepareCards()}
+                />
                 <Button
-                    onClick={onClick}
+                    onClick={prepareCards}
                     className="welcome__button"
                 >
                     Start Game
@@ -48,22 +73,67 @@ function GameBoardWrapper({ children, onClick, hasGameFinished }) {
             </div>
         );
     }
+
+    if (hasError) {
+        setTimeout(() => {
+            unmarkErrors();
+        }, 500);
+    }
+    if (cardList.length > 0 && cardsFlipped) {
+        clearTimeout(timer);
+        timer = setTimeout(flipAllCards, 1000);
+    }
+
     return (
         <div className="game__board">
-            {children}
+            {
+                cardList.map(({
+                    id,
+                    icon,
+                    variant,
+                    selected,
+                    correct,
+                    error,
+                }) => (
+                    <Card
+                        key={`${id}${variant}`}
+                        icon={icon}
+                        variant={variant}
+                        selected={selected}
+                        correct={correct}
+                        error={error}
+                        flipped={cardsFlipped}
+                        onSelect={() => {
+                            const card = {
+                                id,
+                                variant,
+                                selected,
+                                correct
+                            };
+                            pickCard(card);
+                            postCardPick(cardList, card);
+                        }}
+                    />
+                ))
+            }
         </div>
     );
 }
 
-GameBoardWrapper.propTypes = {
-    children: PropTypes.node,
-    onClick: PropTypes.func.isRequired,
-    hasGameFinished: PropTypes.bool
+GameBoard.propTypes = {
+    board: PropTypes.shape({
+        cardList: PropTypes.arrayOf(
+            PropTypes.shape({})
+        ),
+        hasError: PropTypes.bool,
+        cardsFlipped: PropTypes.bool
+    }).isRequired,
+    prepareCards: PropTypes.func.isRequired,
+    pickCard: PropTypes.func.isRequired,
+    unmarkErrors: PropTypes.func.isRequired,
+    postCardPick: PropTypes.func.isRequired,
+    flipAllCards: PropTypes.func.isRequired,
+    setUserName: PropTypes.func.isRequired
 };
 
-GameBoardWrapper.defaultProps = {
-    children: undefined,
-    hasGameFinished: false
-};
-
-export default GameBoardWrapper;
+export default GameBoard;

@@ -5,13 +5,6 @@ const initialState = {
     elapsedTime: 0
 };
 
-function setUserName(state, { userName }) {
-    return {
-        ...state,
-        userName
-    };
-}
-
 function handleCardSelection(state, {
     list,
     card: {
@@ -50,7 +43,22 @@ function score(state = initialState, action) {
             ...handleCardSelection(state, action)
         };
     case 'SET_USER_NAME':
-        return setUserName(state, action);
+        return {
+            ...state,
+            userName: action.userName
+        };
+    case 'PREPARE_CARDS':
+        return {
+            ...state,
+            hasStarted: false,
+            tries: 0,
+            points: 0
+        };
+    case 'FLIP_ALL_CARDS':
+        return {
+            ...state,
+            hasStarted: true
+        };
     default:
         return state;
     }

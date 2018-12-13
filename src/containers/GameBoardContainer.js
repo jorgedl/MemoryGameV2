@@ -6,16 +6,16 @@ import {
     flipAllCards
 } from '../actions/boardActions';
 import {
-    postCardPick
+    postCardPick,
+    setUserName
 } from '../actions/scoreActions';
 
-import Game from '../components/game/Game';
+import GameBoard from '../components/game/GameBoard';
 
 
-function mapStateToProps({ board, score }) {
+function mapStateToProps({ board }) {
     return {
-        board,
-        score
+        board
     };
 }
 
@@ -25,11 +25,12 @@ function mapDispatchToProps(dispatch) {
         pickCard: card => dispatch(pickCard(card)),
         unmarkErrors: () => dispatch(unmarkErrors()),
         flipAllCards: () => dispatch(flipAllCards()),
-        postCardPick: (list, card) => dispatch(postCardPick(list, card))
+        postCardPick: (list, card) => dispatch(postCardPick(list, card)),
+        setUserName: userName => dispatch(setUserName(userName))
     };
 }
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Game);
+)(GameBoard);
