@@ -1,12 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-    prepareCards,
-    pickCard,
-    unmarkErrors,
-    flipAllCards
-} from '../../actions/boardActions';
 
 import Card from './cards/Card';
 import GameBoard from './GameBoard';
@@ -14,13 +7,16 @@ import GameBoard from './GameBoard';
 import './less/Game.less';
 
 let timer;
+let clearingErrors = false;
 
 function Game({
     board,
-    prepareCards: prepareCardsFunc,
-    pickCard: pickCardFunc,
-    unmarkErrors: unmarkErrorsFunc,
-    flipAllCards: flipAllCardsFunc
+    score,
+    prepareCards,
+    pickCard,
+    postCardPick,
+    unmarkErrors,
+    flipAllCards
 }) {
     const {
         cardList,
@@ -28,12 +24,21 @@ function Game({
         cardsFlipped,
         hasGameFinished
     } = board;
-    if (hasError) {
-        setTimeout(unmarkErrorsFunc, 500);
+
+    const {
+        points,
+        tries
+    } = score;
+    if (hasError && !clearingErrors) {
+        clearingErrors = true;
+        setTimeout(() => {
+            unmarkErrors();
+            clearingErrors = false;
+        }, 500);
     }
     if (cardList.length > 0 && cardsFlipped) {
         clearTimeout(timer);
-        timer = setTimeout(flipAllCardsFunc, 1000);
+        timer = setTimeout(flipAllCards, 1000);
     }
     return (
         <div className="game">
@@ -43,15 +48,18 @@ function Game({
                         type="button"
                         className="button"
                         onClick={() => {
-                            prepareCardsFunc();
+                            prepareCards();
                         }}
                     >
                         Reset
                     </button>
                 ) }
+                <div>
+                    {`You scored ${points} points in ${tries} tries`}
+                </div>
             </div>
             <GameBoard
-                onClick={prepareCardsFunc}
+                onClick={prepareCards}
                 hasGameFinished={hasGameFinished}
             >
                 {
@@ -71,34 +79,22 @@ function Game({
                             correct={correct}
                             error={error}
                             flipped={cardsFlipped}
-                            onSelect={() => pickCardFunc({
-                                id,
-                                variant,
-                                selected,
-                                correct
-                            })}
+                            onSelect={() => {
+                                const card = {
+                                    id,
+                                    variant,
+                                    selected,
+                                    correct
+                                };
+                                pickCard(card);
+                                postCardPick(cardList, card);
+                            }}
                         />
                     ))
                 }
             </GameBoard>
         </div>
     );
-}
-
-function mapStateToProps({ board, score }) {
-    return {
-        board,
-        score
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        prepareCards: () => dispatch(prepareCards()),
-        pickCard: card => dispatch(pickCard(card)),
-        unmarkErrors: () => dispatch(unmarkErrors()),
-        flipAllCards: () => dispatch(flipAllCards()),
-    };
 }
 
 Game.propTypes = {
@@ -113,10 +109,8 @@ Game.propTypes = {
     prepareCards: PropTypes.func.isRequired,
     pickCard: PropTypes.func.isRequired,
     unmarkErrors: PropTypes.func.isRequired,
+    postCardPick: PropTypes.func.isRequired,
     flipAllCards: PropTypes.func.isRequired
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Game);
+export default Game;

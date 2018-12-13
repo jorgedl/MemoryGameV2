@@ -36,33 +36,24 @@ export function getCards() {
         shuffleCards(GameCards)
     ).forEach((card) => {
         cardList.push(
-            Object.assign(
-                {},
-                card,
-                {
-                    variant: 1
-                },
-            ),
-            Object.assign(
-                {},
-                card,
-                {
-                    variant: 2
-                }
-            )
+            {
+                ...card,
+                variant: 1
+            },
+            {
+                ...card,
+                variant: 2
+            },
         );
     });
     return shuffleCards(cardList);
 }
 
 export function togleCardSelect(card) {
-    return Object.assign(
-        {},
-        card,
-        {
-            selected: !card.selected
-        }
-    );
+    return {
+        ...card,
+        selected: !card.selected
+    };
 }
 
 export function markCardsAsWrong(cardList, id, variant) {
@@ -74,14 +65,11 @@ export function markCardsAsWrong(cardList, id, variant) {
                 && variant === card.variant
             )
         ) {
-            return Object.assign(
-                {},
-                card,
-                {
-                    error: true,
-                    selected: false
-                }
-            );
+            return {
+                ...card,
+                error: true,
+                selected: false
+            };
         }
         return card;
     });
@@ -90,14 +78,11 @@ export function markCardsAsWrong(cardList, id, variant) {
 export function markCardsAsCorrect(cardList, id) {
     return cardList.map((card) => {
         if (id === card.id) {
-            return Object.assign(
-                {},
-                card,
-                {
-                    correct: true,
-                    selected: false
-                }
-            );
+            return {
+                ...card,
+                correct: true,
+                selected: false
+            };
         }
         return card;
     });
@@ -109,14 +94,11 @@ export function getAllSelected(cardList) {
 
 export function unmarkErrors(cardList) {
     return {
-        cardList: cardList.map(card => Object.assign(
-            {},
-            card,
-            {
-                selected: false,
-                error: false
-            }
-        )),
+        cardList: cardList.map(card => ({
+            ...card,
+            selected: false,
+            error: false
+        })),
         hasError: false
     };
 }
@@ -174,13 +156,10 @@ export function selectCardFromList(state, {
 }
 
 export function flipCards(cardList) {
-    return cardList.map(card => Object.assign(
-        {},
-        card,
-        {
-            flipped: true
-        }
-    ));
+    return cardList.map(card => ({
+        ...card,
+        flipped: true
+    }));
 }
 
 export function cards(state = initialState, action) {
@@ -191,36 +170,28 @@ export function cards(state = initialState, action) {
         ) {
             return state;
         }
-        return Object.assign(
-            {},
-            state,
-            selectCardFromList(state, action),
-        );
+        return {
+            ...state,
+            ...selectCardFromList(state, action)
+        };
     case 'FLIP_ALL_CARDS':
-        return Object.assign(
-            {},
-            state,
-            {
-                cardList: flipCards(state.cardList, action),
-                cardsFlipped: false
-            }
-        );
+        return {
+            ...state,
+            cardList: flipCards(state.cardList, action),
+            cardsFlipped: false
+        };
     case 'UNMARK_CARD_ERRORS':
-        return Object.assign(
-            {},
-            state,
-            unmarkErrors(state.cardList, action)
-        );
+        return {
+            ...state,
+            ...unmarkErrors(state.cardList, action)
+        };
     case 'PREPARE_CARDS':
-        return Object.assign(
-            {},
-            state,
-            {
-                cardList: getCards(),
-                cardsFlipped: true,
-                hasGameFinished: false
-            }
-        );
+        return {
+            ...state,
+            cardList: getCards(),
+            cardsFlipped: true,
+            hasGameFinished: false
+        };
     default:
         return state;
     }

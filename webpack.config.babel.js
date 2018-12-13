@@ -34,6 +34,7 @@ const configs = {
                     loader: 'babel-loader',
                     options: {
                         presets: [
+                            '@babel/preset-stage-2',
                             '@babel/preset-react',
                             '@babel/preset-env'
                         ],

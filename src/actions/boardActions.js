@@ -2,13 +2,10 @@ export const prepareCards = () => ({
     type: 'PREPARE_CARDS'
 });
 
-export const pickCard = params => Object.assign(
-    {},
-    {
-        type: 'PICK_CARD',
-    },
-    params
-);
+export const pickCard = params => ({
+    type: 'PICK_CARD',
+    ...params
+});
 
 export const unpickCard = id => ({
     type: 'UNPICK_CARD',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Header, Footer, Game } from '.';
+import { Header, Footer } from '.';
+import GameContainer from '../containers/GameContainer';
 
 import './less/App.less';
 
@@ -11,7 +12,7 @@ function App() {
                 <Header />
                 <div className="app__container">
                     <Switch>
-                        <Route exact path="/" component={Game} />
+                        <Route exact path="/" component={GameContainer} />
                     </Switch>
                 </div>
                 <Footer />
