@@ -7,14 +7,6 @@
     height: 100%;
     grid-gap: .5rem;
 
-    &__score {
-        background: @brand-second-color;
-        padding: @container-padding;
-        color: #FFF;
-        display: flex;
-        flex-direction: column;
-    }
-
     &__board {
         display: grid;
         grid-template-columns: 33% 33% 33%;
@@ -41,6 +33,13 @@
         margin: 0;
         font-size: 1.4rem;
     }
+    &__input {
+        margin-top: 1rem;
+        border-radius: 4px;
+        border: solid #999 1px;
+        font-size: 1.5rem;
+        font-weight: 4;
+    }
     &__button {
         font-size: 2rem;
         background: @brand-main-color;
@@ -51,4 +50,13 @@
 
 .finished {
     font-size: 2rem;
+}
+
+.board {
+    &__button {
+        font-size: 2rem;
+        background: @brand-main-color;
+        color: #FFF;
+        margin: 2rem 0 0 0;
+    }
 }

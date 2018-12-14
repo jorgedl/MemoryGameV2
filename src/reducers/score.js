@@ -2,11 +2,28 @@ const initialState = {
     userName: undefined,
     points: 0,
     tries: 0,
-    elapsedTime: 0
+    elapsedTime: 0,
+    ranking: []
 };
 
+function postScoreOnRanking({
+    ranking,
+    userName,
+    tries
+}, { timestamp }) {
+    const newRanking = [
+        ...ranking,
+        {
+            userName,
+            tries,
+            timeElapsed: timestamp / 1000
+        }
+    ];
+    return newRanking.sort((a, b) => a.timeElapsed - b.timeElapsed);
+}
+
 function handleCardSelection(state, {
-    list,
+    cardList,
     card: {
         id,
         selected: isSelected,
@@ -17,7 +34,7 @@ function handleCardSelection(state, {
         points,
         tries
     } = state;
-    const selectedCard = list.find(
+    const selectedCard = cardList.find(
         ({ selected }) => selected
     );
     if (
@@ -37,7 +54,12 @@ function handleCardSelection(state, {
 
 function score(state = initialState, action) {
     switch (action.type) {
-    case 'POST_CARD_PICK':
+    case 'POST_SCORE':
+        return {
+            ...state,
+            ranking: postScoreOnRanking(state, action)
+        };
+    case 'PICK_CARD':
         return {
             ...state,
             ...handleCardSelection(state, action)
@@ -53,11 +75,6 @@ function score(state = initialState, action) {
             hasStarted: false,
             tries: 0,
             points: 0
-        };
-    case 'FLIP_ALL_CARDS':
-        return {
-            ...state,
-            hasStarted: true
         };
     default:
         return state;

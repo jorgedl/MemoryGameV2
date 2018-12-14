@@ -1,0 +1,22 @@
+@import '../../../baseStyles/baseColors.less';
+@import '../../../baseStyles/basePaddings.less';
+
+.score {
+    background: @brand-second-color;
+    padding: @container-padding;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    &__ranking {
+        flex: 1;
+        overflow-y: scroll;
+        padding-top: 1rem;
+    }
+
+    &__button {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}

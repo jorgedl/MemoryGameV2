@@ -4,7 +4,9 @@ const initialState = {
     cardList: [],
     hasError: false,
     score: 0,
-    cardsFlipped: true
+    cardsFlipped: true,
+    hasGameFinished: false,
+    hasGameStarted: false
 };
 
 const CARDS_QUANTITY = 6;
@@ -125,7 +127,8 @@ export function selectCardFromList(state, {
         if (hasGameFinished(list)) {
             return {
                 cardList: markCardsAsCorrect(cardList, id),
-                hasGameFinished: true
+                hasGameFinished: true,
+                hasGameStarted: false
             };
         }
         return { cardList: markCardsAsCorrect(cardList, id) };
@@ -172,25 +175,27 @@ export function cards(state = initialState, action) {
         }
         return {
             ...state,
-            ...selectCardFromList(state, action)
+            ...selectCardFromList(state, action.card)
         };
-    case 'FLIP_ALL_CARDS':
+    case 'START_GAME':
         return {
             ...state,
-            cardList: flipCards(state.cardList, action),
-            cardsFlipped: false
+            cardList: flipCards(state.cardList),
+            cardsFlipped: false,
+            hasGameStarted: true
         };
     case 'UNMARK_CARD_ERRORS':
         return {
             ...state,
-            ...unmarkErrors(state.cardList, action)
+            ...unmarkErrors(state.cardList)
         };
     case 'PREPARE_CARDS':
         return {
             ...state,
             cardList: getCards(),
             cardsFlipped: true,
-            hasGameFinished: false
+            hasGameFinished: false,
+            hasGameStarted: false
         };
     default:
         return state;

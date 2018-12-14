@@ -3,10 +3,9 @@ import {
     prepareCards,
     pickCard,
     unmarkErrors,
-    flipAllCards
+    startGame
 } from '../actions/boardActions';
 import {
-    postCardPick,
     setUserName
 } from '../actions/scoreActions';
 
@@ -22,10 +21,9 @@ function mapStateToProps({ board }) {
 function mapDispatchToProps(dispatch) {
     return {
         prepareCards: () => dispatch(prepareCards()),
-        pickCard: card => dispatch(pickCard(card)),
+        pickCard: (card, list) => dispatch(pickCard(card, list)),
         unmarkErrors: () => dispatch(unmarkErrors()),
-        flipAllCards: () => dispatch(flipAllCards()),
-        postCardPick: (list, card) => dispatch(postCardPick(list, card)),
+        startGame: () => dispatch(startGame()),
         setUserName: userName => dispatch(setUserName(userName))
     };
 }

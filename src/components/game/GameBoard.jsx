@@ -16,9 +16,8 @@ function GameBoard({
     board,
     prepareCards,
     pickCard,
-    postCardPick,
     unmarkErrors,
-    flipAllCards,
+    startGame,
     setUserName
 }) {
     const {
@@ -34,7 +33,7 @@ function GameBoard({
                 Congratulations, you won!
                 <Button
                     onClick={prepareCards}
-                    className="welcome__button"
+                    className="board__button"
                 >
                     Play again
                 </Button>
@@ -63,6 +62,7 @@ function GameBoard({
                     placeholder="Your name"
                     onChange={({ target: { value } }) => setUserName(value)}
                     onKeyUp={({ key }) => key === 'Enter' && prepareCards()}
+                    className="welcome__input"
                 />
                 <Button
                     onClick={prepareCards}
@@ -81,7 +81,7 @@ function GameBoard({
     }
     if (cardList.length > 0 && cardsFlipped) {
         clearTimeout(timer);
-        timer = setTimeout(flipAllCards, 1000);
+        timer = setTimeout(startGame, 1000);
     }
 
     return (
@@ -110,8 +110,7 @@ function GameBoard({
                                 selected,
                                 correct
                             };
-                            pickCard(card);
-                            postCardPick(cardList, card);
+                            pickCard(card, cardList);
                         }}
                     />
                 ))
@@ -131,8 +130,7 @@ GameBoard.propTypes = {
     prepareCards: PropTypes.func.isRequired,
     pickCard: PropTypes.func.isRequired,
     unmarkErrors: PropTypes.func.isRequired,
-    postCardPick: PropTypes.func.isRequired,
-    flipAllCards: PropTypes.func.isRequired,
+    startGame: PropTypes.func.isRequired,
     setUserName: PropTypes.func.isRequired
 };
 

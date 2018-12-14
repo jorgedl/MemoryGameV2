@@ -10,14 +10,12 @@ export const onChangeUserName = userName => (
     }
 );
 
-export const postCardPick = (list, card) => (
+export const postScore = timestamp => (
     {
-        type: 'POST_CARD_PICK',
-        list,
-        card
+        type: 'POST_SCORE',
+        timestamp
     }
 );
-
 
 export const setUserName = userName => (
     {
